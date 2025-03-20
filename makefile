@@ -7,8 +7,7 @@ TARGET    ?= desktop linux x86-32
 
 CC = gcc
 
-ROOT := $(dir $(abspath $(lastword $(MAKEFIL
-E_LIST))))
+ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 SRC := $(ROOT)/src/bin/maker
 OBJ := $(ROOT)/build/objs/bin/maker
 BIN := $(ROOT)/build/scc/bin
