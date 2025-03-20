@@ -8,9 +8,9 @@ TARGET    ?= desktop linux x86-32
 CC = gcc
 
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-SRC := $(ROOT)/src/bin/maker
-OBJ := $(ROOT)/build/objs/bin/maker
-BIN := $(ROOT)/build/scc/bin
+SRC := $(ROOT)src/bin/maker
+OBJ := $(ROOT)build/objs/bin/maker
+BIN := $(ROOT)build/scc/bin
 
 CFLAGS  = -O2
 LDFLAGS = 
@@ -31,6 +31,8 @@ CSRC = $(wildcard $(SRC)/*.c $(SRC)/**/*.c)
 COBJ = $(patsubst $(SRC)/%.c,$(OBJ)/%.c.o,$(CSRC))
 
 all: $(OUT)
+clean:
+	rm -rf $(ROOT)build
 
 $(COBJ): $(CSRC)
 	@mkdir -p $(dir $@)
@@ -38,5 +40,5 @@ $(COBJ): $(CSRC)
 
 $(OUT): $(COBJ)
 	@mkdir -p $(dir $@)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $(LDFLAGS) $^ -o $(OUT)
 
