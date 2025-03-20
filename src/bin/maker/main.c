@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
         } break;
         default: { /* argument is maker command */
             command = (char*)malloc(sizeof(argv[i]));
-            command = *argv[i];
+            strcpy(command, argv[i]);
         } break;
         }
     }
