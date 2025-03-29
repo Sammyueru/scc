@@ -3,9 +3,10 @@
 #define SCC_MAKER_BYTECODE_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 typedef struct {
-    typedef enum {
+    enum {
         nop = 0, /* no operation */
         jmp = 1, /* jump to address in memory */
         store = 2, /* store value in variable */
