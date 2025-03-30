@@ -10,6 +10,10 @@ typedef struct {
         nop = 0, /* no operation */
         jmp = 1, /* jump to address in memory */
         store = 2, /* store value in variable */
+        syscall = 3, /* run system software */
+        print = 4, /* print as string */
+        find_file = 5, /* find file by argument */
+        wait = 6, /* wait milliseconds */
     } op;
     int16_t* in_types;
     int16_t out_type;
