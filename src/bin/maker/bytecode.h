@@ -14,6 +14,14 @@ typedef struct {
         print = 4, /* print as string */
         find_file = 5, /* find file by argument */
         wait = 6, /* wait milliseconds */
+        tjmp = 7, /* jump if true */
+        fjmp = 8, /* jump if false */
+        add =  9, /* add */
+        sub = 10, /* subtract */
+        mul = 11, /* multiply */
+        div = 12, /* divide */
+        exp = 13, /* exponent */
+        cmp = 14, /* compare; [0] operator, [1] left, [2] right */
     } op;
     int16_t* in_types;
     int16_t out_type;
