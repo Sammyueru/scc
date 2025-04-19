@@ -20,5 +20,8 @@ typedef struct {
     void** inputs;
 } instruction;
 
+instruction** bc_compile(FILE* from);
+void bc_free(instruction** bc);
+
 #endif
 
