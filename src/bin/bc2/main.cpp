@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
                     case '-': {
                         if (argv[i] == "--std") {
                             i++;
-                            if (arglen < i) break;
+                            if (argc < i) break;
                             if (argv[i] == "2025") {
                                 
                             }
