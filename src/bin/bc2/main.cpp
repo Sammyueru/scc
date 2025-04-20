@@ -5,7 +5,7 @@
 #include <vector>
 
 typedef struct compile_settings_ts {
- /* base-10 fixed point notation; includes
+/*  base-10 fixed point notation; includes
     - year (all but last 3 digits),
     - standard set (next 2 digits),
       - S (00). SCC standard
@@ -14,6 +14,8 @@ typedef struct compile_settings_ts {
 
     uint8_t link; // should link?
     uint8_t compile; // should compile?
+    uint8_t warning_mode; // warning mode
+    uint32_t flags;
     std::string output; // output file name
     std::vector<std::string> include_dirs; // include directories
     std::vector<std::string> libraries;
