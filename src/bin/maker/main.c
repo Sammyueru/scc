@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
             case 'f': {
                 i++;
                 if (i >= argc) {
-                    printf("{SCC: Maker} ERROR: no maker file selected with `-f`");
+                    printf("{SCC: Maker} ERROR: no maker file selected with `-f`.\n");
                     return -1;
                 }
             } break;

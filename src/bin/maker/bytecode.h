@@ -22,7 +22,25 @@ typedef struct {
         div = 12, /* divide */
         exp = 13, /* exponent */
         cmp = 14, /* compare; [0] operator, [1] left, [2] right */
+        sjmp = 15, /* stack jump (updates the stack pointer) */
     } op;
+
+    size_t inputs_counts;
+/*  input/output types
+    0.  void
+    1.  int
+    2.  str
+    3.  str[]
+    4.  bool
+    5.  int[]
+    6.  unsigned int
+    7.  float
+    8.  float[]
+    9.  double
+    10. double[]
+    11. size
+    12. long
+    13. size[] */
     int16_t* in_types;
     int16_t out_type;
     void** inputs;
@@ -30,6 +48,8 @@ typedef struct {
 
 instruction** bc_compile(FILE* from);
 void bc_free(instruction** bc);
+
+int bc_run(instruction** bc);
 
 #endif
 
