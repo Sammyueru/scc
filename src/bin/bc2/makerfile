@@ -1,0 +1,22 @@
+# SCC: Biological C² - Copyright (c) 2025 Samm, See LICENSE.txt for license details
+
+makerdir: str = this.directory()
+project_dir: str = path.abs(makerdir() + "../../../")
+src: str = makerdir
+build_dir: str = project_dir + "/build"
+obj_dir: str = build_dir + "/objs/bin/bc2"
+sources: str[] = find.files(src + "/**")
+inc: str = "-I" + src
+
+compile(cxx: str = "clang++"): str[]
+    result: str[]
+    for source in sources:
+        { cxx + " " + source + "-o " obj_dir + "/" + source + ".o" }
+        result.append = obj_dir + "/" + source + ".o"
+    return result
+
+build(cxx: str = "clang++"):
+    compile(cxx)
+
+clean():
+
