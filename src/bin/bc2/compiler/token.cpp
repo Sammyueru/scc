@@ -6,3 +6,7 @@ Token::Token(Type type, std::string value) {
     this->type = type;
     this->value = value;
 }
+
+Token::~Token() {
+    
+}
