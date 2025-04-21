@@ -3,10 +3,11 @@
 #include <cstdint>
 #include <cstring>
 #include <vector>
+#include <compiler/compiler.h>
 
 int main(int argc, char* argv[]) {
     std::vector<std::string> input_files; // input bio c2 files to be compiled
-    compile_settings settings = {0};
+    Compiler_Settings settings = {0};
     settings.version = 2025000;
 
     for (int i = 0; i < argc; i++) {
@@ -64,7 +65,8 @@ int main(int argc, char* argv[]) {
         }
     }
 
-
+    Compiler compiler(input_files, settings);
+    compiler.Compile();
 
     return 0;
 }

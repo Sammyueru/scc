@@ -4,8 +4,9 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
+#include <compiler/parse.h>
 
-typedef struct compile_settings_ts {
+typedef struct compiler_settings_ts {
 /*  base-10 fixed point notation; includes
     - year (all but last 3 digits),
     - standard set (next 2 digits),
@@ -21,6 +22,18 @@ typedef struct compile_settings_ts {
     std::vector<std::string> include_dirs; // include directories
     std::vector<std::string> libraries;
     std::vector<std::string> library_dirs; // library directories
-} compile_settings;
+} Compiler_Settings;
+
+class Compiler() {
+private:
+    std::vector<Parser> parsers;
+    Compiler_Settings settings;
+public:
+    Compiler(std::vector<std::string> source_file, Compiler_Settings settings);
+    ~Compiler();
+    
+public:
+    void Compile();
+};
 
 #endif
