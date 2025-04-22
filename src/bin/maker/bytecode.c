@@ -1,49 +1,60 @@
 /* SCC: Maker - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
 #include "bytecode.h"
+#include "parser.h"
 
-instruction** bc_compile(FILE* from) {
-    instruction** bc = (instruction**)malloc(sizeof(instruction*) * 30);
+bc_program* bc_compile(FILE* from) {
+    bc_program* program = (bc_program*)malloc(sizeof(bc_program));
+    program->bc = (instruction**)malloc(sizeof(instruction*));
     /* pre-initialize bytecode instructions */
-    for (int i = 0; i < 30; i++) {
-        bc[i] = (instruction*)malloc(sizeof(instruction));
-        bc[i]->op = nop;
-        bc[i]->inputs_count = 0;
-        bc[i]->in_types = NULL;
-        bc[i]->out_type = 0;
-        bc[i]->inputs = NULL;
+    program->bc[0] = (instruction*)malloc(sizeof(instruction));
+    program->bc[0]->op = nop;
+    program->bc[0]->inputs_count = 0;
+    program->bc[0]->in_types = NULL;
+    program->bc[0]->out_type = 0;
+    program->bc[0]->inputs = NULL;
+
+    /* parse file */
+    char line[255];
+    while (fgets(line, 255, from)) {
+        bc_program* prgm_line = parser_parse_line(program, line);
+        program->bc_count += prgm_line->bc_count;
+        program->bc = realloc(program->bc, program->bc_count * sizeof(instruction));
+
+        /* move instructions to full program */
+        for (size_t i = program->bc_count - prgm_line->bc_count; i < program->bc_count; i++) {
+            *program->bc[i] = *prgm_line->bc[program->bc_count - i];
+        }
+
+        /* free line bytecode */
+        bc_free(prgm_line);
     }
 
-    return bc;
+    return program;
 }
 
-void bc_free(instruction** bc) {
-    for (size_t i = 0; i < (sizeof(bc)/sizeof(instruction*)); i++) {
-        if (bc[i]->in_types) free(bc[i]->in_types); /* free inputs' types */
+void bc_free(bc_program* program) {
+    for (size_t i = 0; i < (program->bc_count); i++) {
+        if (program->bc[i]->in_types) free(program->bc[i]->in_types); /* free inputs' types */
 
         /* free inputs' elements */
-        if (bc[i]->inputs) {
-            for (int ix = 0; ix < sizeof(bc[i]->inputs)/sizeof(void*); ix++) {
-                free(bc[i]->inputs[ix]);
+        if (program->bc[i]->inputs) {
+            for (int ix = 0; ix < program->bc_count; ix++) {
+                free(program->bc[i]->inputs[ix]);
             }
         }
-        free(bc[i]->inputs); /* free inputs array */
-        free(bc[i]); /* free instruction element */
+
+        free(program->bc[i]->inputs); /* free inputs array */
+        free(program->bc[i]); /* free instruction element */
     }
 
-    free(bc); /* free instruction array */
+    free(program->bc);
+    free(program); /* free instruction array */
 }
 
-int bc_run(instruction** bc) {
-    size_t bc_count = sizeof(bc)/sizeof(instruction*); /* number of bytecode instructions */
+int bc_run(bc_program* program) {
     size_t pos = 0;
-    while (pos < bc_count) {
-        size_t input_count = sizeof(bc[pos]->in_types)/sizeof(uint16_t);
-        if (input_count != sizeof(bc[pos]->inputs)/sizeof(void*)) { /* in_types count != inputs count */
-            printf("{SCC: Maker} ERROR: input types count not equal to inputs count.\n");
-            return -1;
-        }
-
-        switch (bc[pos]->op) {
+    while (pos < program->bc_count) {
+        switch (program->bc[pos]->op) {
         case nop: {
             continue;
         } break;
@@ -52,9 +63,9 @@ int bc_run(instruction** bc) {
                 printf("{SCC: Maker} ERROR: 'jmp' instruction must have only 1 input.\n");
                 return -1;
             }
-            switch (bc[pos]->in_types[0]) {
+            switch (program->bc[pos]->in_types[0]) {
             case 11: {
-                size_t jump_to = bc[pos]->inputs[0];
+                size_t jump_to = program->bc[pos]->inputs[0];
                 if (bc_count < jump_to) {
                     printf("{SCC: Maker} ERROR: 'jmp' instruction would go out of bounds.\n");
                     return -1;

@@ -46,10 +46,15 @@ typedef struct {
     void** inputs;
 } instruction;
 
-instruction** bc_compile(FILE* from);
-void bc_free(instruction** bc);
+typedef struct {
+    instruction** bc;
+    size_t bc_count;
+} bc_program;
 
-int bc_run(instruction** bc);
+bc_program* bc_compile(FILE* from);
+void bc_free(bc_program* program);
+
+int bc_run(bc_program* program);
 
 #endif
 
