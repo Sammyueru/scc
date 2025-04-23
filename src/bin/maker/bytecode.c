@@ -14,8 +14,9 @@ bc_program* bc_compile(FILE* from) {
     program->bc[0]->inputs = NULL;
 
     /* parse file */
-    char line[255];
+    char line[256];
     while (fgets(line, 255, from)) {
+        line[255] = '\0';
         bc_program* prgm_line = parser_parse_line(program, line);
         program->bc_count += prgm_line->bc_count;
         program->bc = realloc(program->bc, program->bc_count * sizeof(instruction));

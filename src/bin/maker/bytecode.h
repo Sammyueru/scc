@@ -23,6 +23,10 @@ typedef struct {
         exp = 13, /* exponent */
         cmp = 14, /* compare; [0] operator, [1] left, [2] right */
         sjmp = 15, /* stack jump (updates the stack pointer) */
+        find_files = 16,
+        and = 17,
+        or = 18,
+        xor = 19,
     } op;
 
     size_t inputs_counts;
@@ -45,6 +49,11 @@ typedef struct {
     int16_t out_type;
     void** inputs;
 } instruction;
+
+typedef struct {
+    instruction* bc;
+    size_t count;
+} bc_token;
 
 typedef struct {
     instruction** bc;
