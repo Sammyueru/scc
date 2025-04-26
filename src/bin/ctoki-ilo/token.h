@@ -1,6 +1,6 @@
-/* SCC: Classical toki ijo - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
-#ifndef SCC_TOKI_IJO_TOKEN_H
-#define SCC_TOKI_IJO_TOKEN_H
+/* SCC: Classical toki ilo - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
+#ifndef SCC_CTOKI_IJO_TOKEN_H
+#define SCC_CTOKI_IJO_TOKEN_H
 
 class Token {
 public:
@@ -10,6 +10,7 @@ public:
         Operator = 1,
         Seperator = 2,
         Literal = 3,
+        Macro = 4,
 
         PERIOD = 6,
         QUESTION = 7,
