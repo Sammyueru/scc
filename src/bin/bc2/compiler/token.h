@@ -10,7 +10,7 @@ public:
         Seperator = 2,
         Literal = 3,
         Identifier = 4,
-        KEYWORD = 5,
+        Keyword = 5,
         Comment = 6,
     };
 
