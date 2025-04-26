@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
-#include <compiler/parse.h>
+#include <compiler/parser.h>
 
 typedef struct compiler_settings_ts {
 /*  base-10 fixed point notation; includes
