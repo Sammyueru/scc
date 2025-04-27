@@ -9,6 +9,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> input_files; // input toki pona files to be compiled
     Compiler_Settings settings = {0};
     settings.version = 139;
+    settings.number_systems.push_back(0);
 
     for (int i = 0; i < argc; i++) {
         size_t arglen = strlen(argv[i]); // the length of the argument currently being parsed
