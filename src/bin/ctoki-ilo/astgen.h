@@ -3,13 +3,15 @@
 #define SCC_CTOKI_IJO_ASTGEN_H
 #include <iostream>
 #include <cstdint>
+#include <memory>
 #include <vector>
 #include <token.h>
+#include <cpp/ast/astnodes.h>
 
 class AST_Generator() {
 private:
-    /* std::vector<AST_Node*> stack;
-    AST_Program* ast; */
+    std::vector<shared_ptr<AST_Tree>> stack;
+    AST_Program* ast;
     std::vector<std::vector<Token>> tokens;
 
 public:
@@ -17,7 +19,7 @@ public:
     ~AST_Generator();
 
 public:
-    /* AST_Program Generate(); */
+    AST_Program Generate();
 };
 
 #endif
