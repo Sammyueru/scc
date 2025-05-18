@@ -17,6 +17,17 @@ public:
 
     uint8_t compile = 0;
     uint8_t link = 0;
+
+    std::vector<std::string> include_dirs;
+};
+
+class Compiler {
+public:
+    Compiler();
+    ~Compiler();
+
+public:
+    void Compile();
 };
 
 #endif

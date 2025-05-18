@@ -47,6 +47,12 @@ int main(int argc, char* argv[]) {
                     settings.version_major = (unsigned int)std::stoi(major);
                 }
             } break;
+            case 'I': {
+                i++;
+                if (i >= argc) break;
+
+                settings.include_dirs.push_back(std::string(argv[i]));
+            } break;
             default: break;
             }
         } break;
@@ -56,6 +62,11 @@ int main(int argc, char* argv[]) {
             input_files.push_back(std::string(argv[i]));
         } break;
         }
+    }
+
+    if (input_files.size() < 1) {
+        std::cout << "{SCC: Classical iC} Error: no input sources supplied" << std::endl;
+        return -1;
     }
 
     return 0;
