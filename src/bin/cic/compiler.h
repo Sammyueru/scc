@@ -22,8 +22,12 @@ public:
 };
 
 class Compiler {
+private:
+    Compiler_Settings settings;
+    std::vector<std::string> input_files;
+
 public:
-    Compiler();
+    Compiler(Compiler_Settings settings, std::vector<std::string> input_files);
     ~Compiler();
 
 public:
