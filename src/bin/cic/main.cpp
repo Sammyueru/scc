@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <cstring>
+#include "compiler.h"
 
 int main(int argc, char* argv[]) {
     std::vector<std::string> input_files;
@@ -20,7 +21,7 @@ int main(int argc, char* argv[]) {
 
             switch (argv[i][1]) {
             case '-': {
-                if (argv[i] == '--std') {
+                if (argv[i] == "--std") {
                     i++; if (i >= argc) break;
 
                     settings.version_minor = 0;
@@ -30,7 +31,7 @@ int main(int argc, char* argv[]) {
                     size_t standard_dot = major.find('.');
                     if (standard_dot != std::string::npos) {
                         major = major.substr(0, standard_dot);
-                        std::string minor = standard.substr(standard_dot, standard.end());
+                        std::string minor = standard.substr(standard_dot, standard.size() - 1);
                         if (!std::isdigit(minor.at(minor.size() - 1))) {
                             minor.pop_back();
                             settings.version_state = standard.back();
