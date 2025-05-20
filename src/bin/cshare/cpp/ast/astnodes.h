@@ -19,11 +19,18 @@ public:
     std::string type;
 };
 
+class AST_Var_Op : AST_Node {
+public:
+    std::shared_ptr<AST_Variable> var;
+    std::string op;
+    std::shared_ptr<AST_Node> right;
+};
+
 class AST_Operation : AST_Node {
 public:
     std::shared_ptr<AST_Node> left = nullptr;
     std::string op;
-    std::shared_ptr<AST_Node> right;
+    std::shared_ptr<AST_Node> right = nullptr;
 };
 
 class AST_Asignment : AST_Node {
