@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+namespace AST {
 class AST_Node {};
 
 class AST_Tree : AST_Node {
@@ -46,5 +47,6 @@ public:
     std::vector<AST_If> _else_ifs;
     std::vector<std::shared_ptr<AST_Node>> _else;
 };
+}
 
 #endif

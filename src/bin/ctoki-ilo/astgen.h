@@ -10,8 +10,8 @@
 
 class AST_Generator() {
 private:
-    std::vector<shared_ptr<AST_Tree>> stack;
-    AST_Program* ast;
+    std::vector<shared_ptr<AST::AST_Tree>> stack;
+    AST::AST_Program* ast;
     std::vector<std::vector<Token>> tokens;
 
 public:
@@ -19,7 +19,7 @@ public:
     ~AST_Generator();
 
 public:
-    AST_Program Generate();
+    AST::AST_Program Generate();
 };
 
 #endif
