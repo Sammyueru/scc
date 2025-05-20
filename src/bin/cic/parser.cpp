@@ -34,7 +34,7 @@ std::vector<Token> Parser::Parse() {
         case '\r':
         case '\f':
         case '\v': {
-            std::string whitespace(current);
+            std::string whitespace = "" + current;
             for (size_t i = pos + 1; i < this->source.length(); i++) {
                 char check = this->source.at(i);
                 if (!isspace(check)) break;
@@ -42,7 +42,7 @@ std::vector<Token> Parser::Parse() {
                 pos++;
             }
 
-            tokens.push_back(Token::Type::Whitespace, whitespace);
+            tokens.push_back(Token(Token::Type::Whitespace, whitespace));
         } break;
         case '+':
         case '-':
@@ -78,21 +78,21 @@ std::vector<Token> Parser::Parse() {
                     comment += "*/";
                     pos++;
                 }
-                tokens.push_back(Token::Type::Comment, comment);
+                tokens.push_back(Token(Token::Type::Comment, comment));
                 break;
             }
 
-            std::string op(current);
+            std::string op = "" + current;
             if (next == '=' || next == current) {
-                tokens.push_back(next);
+                op.push_back(next);
                 this->pos++;
             }
-            tokens.push_back(Token::Type::Operator, op);
+            tokens.push_back(Token(Token::Type::Operator, op));
         } break;
         // unknown
         default: {
             std::cout << "{SCC: Classical iC} Error: unknown token." << std::endl;
-            tokens.push_back(Token::Type::Unknown, std::string(current));
+            tokens.push_back(Token(Token::Type::Unknown, std::string("" + current)));
         } break;
         }
         last_token = tokens.back();

@@ -13,7 +13,7 @@ private:
     size_t pos;
 
 public:
-    Parser();
+    Parser(std::string source);
     ~Parser();
 
 private:
