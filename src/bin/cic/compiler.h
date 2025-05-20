@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdint>
+#include "parser.h"
 
 class Compiler_Settings {
 public:
@@ -25,6 +26,7 @@ class Compiler {
 private:
     Compiler_Settings settings;
     std::vector<std::string> input_files;
+    std::vector<Parser> parsers;
 
 public:
     Compiler(Compiler_Settings settings, std::vector<std::string> input_files);
