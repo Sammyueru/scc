@@ -82,6 +82,18 @@ std::vector<Token> Parser::Parse() {
                 break;
             }
 
+            if (current == '*' && next == '*') {
+                std::string op = "";
+                for (int i = this->pos; i < this->source.length(); i++) {
+                    current = this->source.at(i);
+                    if (current != '*') break;
+                    op += current;
+                    pos++;
+                }
+                tokens.push_back(Token(Token::Type::Operator, op));
+                break;
+            }
+
             std::string op = "" + current;
             if (next == '=' || next == current) {
                 op.push_back(next);
