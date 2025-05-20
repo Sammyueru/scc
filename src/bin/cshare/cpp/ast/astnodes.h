@@ -21,7 +21,7 @@ public:
 
 class AST_Operation : AST_Node {
 public:
-    std::shared_ptr<AST_Node> left;
+    std::shared_ptr<AST_Node> left = nullptr;
     std::string op;
     std::shared_ptr<AST_Node> right;
 };
@@ -36,8 +36,8 @@ public:
 class AST_If : AST_Tree {
 public:
     AST_Operation condition;
-    std::vector<AST_If> else_ifs;
-    std::vector<std::shared_ptr<AST_Node>> else;
+    std::vector<AST_If> _else_ifs;
+    std::vector<std::shared_ptr<AST_Node>> _else;
 };
 
 #endif
