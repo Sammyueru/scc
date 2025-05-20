@@ -11,20 +11,21 @@ Parser::Parser(std::string source) {
 }
 
 Parser::~Parser() {
-    delete this->tokens;
+    
 }
 
 char Parser::Peek(int amt) {
-    if (-amt > pos) return '\0';
-    size_t peek_at = pos + amt;
-    if (peek_at > source.length() - 1) return '\0';
-    return source.at(peek_at);
+    if (-amt > this->pos) return '\0';
+    size_t peek_at = this->pos + amt;
+    if (peek_at > this->source.length() - 1) return '\0';
+    return this->source.at(peek_at);
 }
 
 std::vector<Token> Parser::Parse() {
+    std::vector<Token> tokens;
     Token last_token(Token::Type::Unknown, std::string("NONE"));
     for (this->pos = 0; this->pos < this->source.length(); this->pos++) {
-        char current = source.at(this->pos);
+        char current = this->source.at(this->pos);
         switch (current) {
         // whitespace
         case ' ':
@@ -34,22 +35,68 @@ std::vector<Token> Parser::Parse() {
         case '\f':
         case '\v': {
             std::string whitespace(current);
-            for (size_t i = pos + 1; i < source.length(); i++) {
-                char check = source.at(i);
+            for (size_t i = pos + 1; i < this->source.length(); i++) {
+                char check = this->source.at(i);
                 if (!isspace(check)) break;
                 whitespace.push_back(check);
                 pos++;
             }
 
-            this->tokens->push_back(Token::Type::Whitespace, whitespace);
+            tokens.push_back(Token::Type::Whitespace, whitespace);
+        } break;
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '^':
+        case '>':
+        case '<':
+        case '&':
+        case '|': {
+            char next = this->Peek(1);
+            if (current == '/' && (next == '/' || next == '*')) {
+                std::string comment = "";
+                if (next == '/') {
+                    for (int i = pos; i < source.length(); i++) {
+                        current = source.at(i);
+                        if (current == '\n') break;
+                        comment.push_back(current);
+                        pos++;
+                    }
+                }
+                else {
+                    comment += "/*";
+                    pos += 2;
+                    for (int i = pos; i < source.length(); i++) {
+                        current = source.at(i);
+                        if (current == '*') {
+                            if (this->Peek(1) == '/') break;
+                        }
+                        comment.push_back(current);
+                        pos++;
+                    }
+                    comment += "*/";
+                    pos++;
+                }
+                tokens.push_back(Token::Type::Comment, comment);
+                break;
+            }
+
+            std::string op(current);
+            if (next == '=' || next == current) {
+                tokens.push_back(next);
+                this->pos++;
+            }
+            tokens.push_back(Token::Type::Operator, op);
         } break;
         // unknown
         default: {
             std::cout << "{SCC: Classical iC} Error: unknown token." << std::endl;
-            this->tokens->push_back(Token::Type::Unknown, std::string(current));
+            tokens.push_back(Token::Type::Unknown, std::string(current));
         } break;
         }
+        last_token = tokens.back();
     }
 
-    return *this->tokens;
+    return tokens;
 }

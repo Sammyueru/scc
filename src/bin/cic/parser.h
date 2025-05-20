@@ -11,7 +11,6 @@ class Parser {
 private:
     std::string source;
     size_t pos;
-    std::vector<Token>* tokens;
 
 public:
     Parser();
