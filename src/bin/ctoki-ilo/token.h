@@ -8,7 +8,7 @@ public:
         Unknown = -1,
         Whitespace = 0,
         Operator = 1,
-        Seperator = 2,
+        Separator = 2,
         Literal = 3,
         Macro = 4,
 
