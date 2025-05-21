@@ -62,7 +62,6 @@ char Parser::Peek(int amt) {
 
 std::vector<Token> Parser::Parse() {
     std::vector<Token> tokens;
-    Token last_token(Token::Type::Unknown, std::string("NONE"));
     for (this->pos = 0; this->pos < this->source.length(); this->pos++) {
         char current = this->source.at(this->pos);
 
@@ -265,7 +264,6 @@ std::vector<Token> Parser::Parse() {
             tokens.push_back(Token(Token::Type::Unknown, std::string("" + current)));
         } break;
         }
-        last_token = tokens.back();
     }
 
     return tokens;
