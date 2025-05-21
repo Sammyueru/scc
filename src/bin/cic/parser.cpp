@@ -158,6 +158,11 @@ std::vector<Token> Parser::Parse() {
                 break;
             }
 
+            if (current == '-' && next == '>') {
+                tokens.push_back(Token(Token::Type::Member_access, "->"));
+                break;
+            }
+
             std::string op = "" + current;
             if (next == '=' || next == current) {
                 op.push_back(next);
@@ -175,6 +180,7 @@ std::vector<Token> Parser::Parse() {
                 macro.push_back(current);
                 this->pos++;
             }
+            
             tokens.push_back(Token(Token::Type::Macro, macro));
         } break;
 
@@ -183,6 +189,15 @@ std::vector<Token> Parser::Parse() {
             std::string literal = "";
             uint8_t exit = 0;
             size_t i = 0;
+
+            if (current == '.') {
+                char next = this->Peek(1);
+                if (next == '_' || (next >= 'a' && next <= 'z') || (next >= 'A' && next <= 'Z')) {
+                    tokens.push_back(Token(Token::Type::Member_access, "."));
+                    break;
+                }
+            }
+
             for (i = this->pos; i < this->source.length(); i++) {
                 if (exit > 0) {
                     break;
