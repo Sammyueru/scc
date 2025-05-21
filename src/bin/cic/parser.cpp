@@ -65,6 +65,27 @@ std::vector<Token> Parser::Parse() {
     Token last_token(Token::Type::Unknown, std::string("NONE"));
     for (this->pos = 0; this->pos < this->source.length(); this->pos++) {
         char current = this->source.at(this->pos);
+
+        // variable names and keywords
+        if (current == '_' || (current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z')) {
+            std::string word = "";
+            for (size_t i = this->pos; i < this->source.length(); i++) {
+                current = this->source.at(i);
+                if (!(current == '_' || (current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z') || (current >= '0' && current <= '9'))) break;
+                word.push_back(current);
+                this->pos++;
+            }
+
+            if (std::find(this->keywords.begin(), this->keywords.end(), word) != vector.end()) {
+                tokens.push_back(Token(Token::Type::Keyword, word));
+            }
+            else {
+                tokens.push_back(Token(Token::Type::Word, word));
+            }
+
+            continue;
+        }
+
         switch (current) {
         // whitespace
         case ' ': case '\n': case '\t': case '\r': case '\f': case '\v': {
@@ -74,13 +95,14 @@ std::vector<Token> Parser::Parse() {
                 if (!isspace(current)) break;
                 if (current == '\n') this->line_num++;
                 whitespace.push_back(current);
-                pos++;
+                this->pos++;
             }
 
             tokens.push_back(Token(Token::Type::Whitespace, whitespace));
         } break;
 
         // separators
+        case ';':
         case '(': case ')':
         case '{': case '}':
         case '[': case ']': {
@@ -88,35 +110,37 @@ std::vector<Token> Parser::Parse() {
         } break;
 
         // operators
+        case ':':
         case '^':
         case '*': case '/':
         case '+': case '-':
         case '<': case '>':
+        case '=': case '!':
         case '&': case '|': {
             char next = this->Peek(1);
             if (current == '/' && (next == '/' || next == '*')) {
                 std::string comment = "";
                 if (next == '/') {
-                    for (size_t i = pos; i < source.length(); i++) {
+                    for (size_t i = this->pos; i < source.length(); i++) {
                         current = source.at(i);
                         if (current == '\n') break;
                         comment.push_back(current);
-                        pos++;
+                        this->pos++;
                     }
                 }
                 else {
                     comment += "/*";
-                    pos += 2;
+                    this->pos += 2;
                     for (size_t i = pos; i < source.length(); i++) {
                         current = source.at(i);
                         if (current == '*') {
                             if (this->Peek(1) == '/') break;
                         }
                         comment.push_back(current);
-                        pos++;
+                        this->pos++;
                     }
                     comment += "*/";
-                    pos++;
+                    this->pos++;
                 }
                 tokens.push_back(Token(Token::Type::Comment, comment));
                 break;
@@ -128,7 +152,7 @@ std::vector<Token> Parser::Parse() {
                     current = this->source.at(i);
                     if (current != '*') break;
                     op += current;
-                    pos++;
+                    this->pos++;
                 }
                 tokens.push_back(Token(Token::Type::Operator, op));
                 break;
@@ -142,16 +166,28 @@ std::vector<Token> Parser::Parse() {
             tokens.push_back(Token(Token::Type::Operator, op));
         } break;
 
+        // macros
+        case '#': {
+            std::string macro = "";
+            for (size_t i = this->pos; i < this->source.length(); i++) {
+                current = this->source.at(i);
+                if (current == '\n') break;
+                macro.push_back(current);
+                this->pos++;
+            }
+            tokens.push_back(Token(Token::Type::Macro, macro));
+        } break;
+
         // number literals
         case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': case '.': {
             std::string literal = "";
             uint8_t exit = 0;
             size_t i = 0;
-            for (i = pos; i < source.length(); i++) {
+            for (i = this->pos; i < this->source.length(); i++) {
                 if (exit > 0) {
                     break;
                 }
-                current = source.at(i);
+                current = this->source.at(i);
                 if (isdigit(current) || current == '.' || current == 'f' || current == 'd') {
                     literal.push_back(current);
                     continue;

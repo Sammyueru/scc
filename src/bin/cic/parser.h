@@ -10,6 +10,8 @@
 
 class Parser {
 private:
+    const std::vector<std::string> keywords = { "if", "switch", "case", "default", "while", "for", "else", "break", "continue", "typedef", "struct", "class", "return", "this", };
+
     std::string source;
     size_t pos;
     size_t line_num;

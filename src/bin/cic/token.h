@@ -13,7 +13,8 @@ public:
         Literal = 3,
         Macro = 4,
         Keyword = 5,
-        Member_access = 6,
+        Word = 6,
+        Member_access = 7,
 
 /*
         Semicolon, // end of statement
