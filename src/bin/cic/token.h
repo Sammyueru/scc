@@ -36,7 +36,7 @@ public:
 
         Comma, // (,)
 
-        // types
+        // literals
         Integer, // (?, '?'). (number AND no decimal point) OR (type is specified manually AND is compatible)
         Float, // (?.?, ?.?f, ?). number AND ((has a decimal point MAY end with f) OR the type is specified manually)
         Double, // (?.?, ?.?d, ?). number AND ((has a decimal point AND ends with d) OR the type is specified manually)

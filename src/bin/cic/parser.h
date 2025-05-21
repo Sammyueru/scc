@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdint>
 #include "token.h"
 #include <cpp/ast/astnodes.h>
 
@@ -11,12 +12,19 @@ class Parser {
 private:
     std::string source;
     size_t pos;
+    size_t line_num;
 
 public:
     Parser(std::string source);
     ~Parser();
 
 private:
+    std::string Get_Pos_Data();
+    std::string Get_Pos_Data(size_t tpos);
+
+    size_t Get_Line_Column();
+    size_t Get_Line_Column(size_t tpos = 0);
+    
     char Peek(int amt);
 
 public:
