@@ -89,7 +89,7 @@ std::vector<Token> Parser::Parse() {
         // whitespace
         case ' ': case '\n': case '\t': case '\r': case '\f': case '\v': {
             std::string whitespace = "";
-            for (size_t i = pos; i < this->source.length(); i++) {
+            for (size_t i = this->pos; i < this->source.length(); i++) {
                 current = this->source.at(i);
                 if (!isspace(current)) break;
                 if (current == '\n') this->line_num++;
@@ -130,7 +130,7 @@ std::vector<Token> Parser::Parse() {
                 else {
                     comment += "/*";
                     this->pos += 2;
-                    for (size_t i = pos; i < source.length(); i++) {
+                    for (size_t i = this->pos; i < source.length(); i++) {
                         current = source.at(i);
                         if (current == '*') {
                             if (this->Peek(1) == '/') break;
