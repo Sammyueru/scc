@@ -12,6 +12,6 @@ private:
 public:
     AST_Generator();
     ~AST_Generator();
-}
+};
 
 #endif
