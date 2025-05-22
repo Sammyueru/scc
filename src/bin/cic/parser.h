@@ -25,7 +25,7 @@ private:
     std::string Get_Pos_Data(size_t tpos);
 
     size_t Get_Line_Column();
-    size_t Get_Line_Column(size_t tpos = 0);
+    size_t Get_Line_Column(size_t tpos);
     
     char Peek(int amt);
 

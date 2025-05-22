@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include <cctype>
+#include <algorithm>
 #include "parser.h"
 
 Parser::Parser(std::string source) {
@@ -75,7 +76,7 @@ std::vector<Token> Parser::Parse() {
                 this->pos++;
             }
 
-            if (std::find(this->keywords.begin(), this->keywords.end(), word) != vector.end()) {
+            if (std::find(this->keywords.begin(), this->keywords.end(), word) != this->keywords.end()) {
                 tokens.push_back(Token(Token::Type::Keyword, word));
             }
             else {
@@ -252,7 +253,7 @@ std::vector<Token> Parser::Parse() {
             char literal_sep = current;
             std::string literal = "" + current;
             for (this->pos++; this->pos < this->source.length(); this->pos++) {
-                current = this->source.at(i);
+                current = this->source.at(this->pos);
                 literal += current;
                 if (current == literal_sep && this->Peek(-1) != '\\') break; // if literal is terminated
             }
@@ -260,7 +261,7 @@ std::vector<Token> Parser::Parse() {
 
         // unknown
         default: {
-            std::cout << ("{SCC: Classical iC} Error: unknown token `" + current + "`.") << std::endl;
+            std::cout << "{SCC: Classical iC} Error: unknown token `" << current << "`." << std::endl;
             tokens.push_back(Token(Token::Type::Unknown, std::string("" + current)));
         } break;
         }
