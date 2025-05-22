@@ -19,17 +19,55 @@ Token AST_Generator::Peek(int amt) {
     return std::get<1>(this->sources.at(current_source)).at(peek_at); // successfully returns the character
 }
 
+std::string AST_Generator::Get_Current_Source() {
+    return std::get<0>(this->sources.at(current_source));
+}
+
 std::shared_ptr<AST::AST_Program> AST_Generator::Generate() {
-    std::shared_ptr<AST::AST_Program> result(new AST::AST_Program());
+    std::shared_ptr<AST::AST_Program> result = std::make_shared<AST::AST_Program>(new AST::AST_Program());
+    std::vector<std::shared_ptr<AST::AST_Tree>> tree_stack = { std::make_shared<AST::AST_Tree>(result.get())};
+    std::string err_b = "{SCC: Classical iC} Error: ";
     for (this->current_source = 0; this->current_source < this->sources.size(); this->current_source++) {
         std::tuple<std::string, std::vector<Token>> source = this->sources.at(current_source);
         std::string current_file = std::get<0>(source);
         std::vector<Token> tokens = std::get<1>(source);
-        std::vector<std::shared_ptr<AST::AST_Tree>> tree_stack(std::shared_ptr<AST::AST_Tree>(result));
         for (this->pos = 0; this->pos < tokens.size(); this->pos++) {
             Token current = tokens[this->pos];
             switch(current.type) {
-            case Token::Type::Operator: {
+            case Token::Type::Separator: {
+            if (current.value.length() != 1) { std::cout << err_b << "separator token length not equal to 0. " << this->Get_Current_Source() << std::endl; break; }
+            switch (current.value.at(0)) {
+            case ':': {
+
+            } break;
+
+            case ';': {
+                
+            } break;
+
+            case '(': {
+
+            } break;
+
+            case ')': {
+
+            } break;
+
+            case '{': {
+                AST::AST_Tree node();
+                tree_stack.back()->contents.push_back(std::make_shared<AST::AST_Node>(node));
+                tree_stack.push_back(std::make_shared<AST::AST_Tree>(node));
+            } break;
+
+            case '}': {
+                tree_stack.pop_back();
+            } break;
+
+            default: { std::cout << err_b << "separator string unknown. " << this->Get_Current_Source() << std::endl; } break;
+            }
+            } break;
+
+            case Token::Type::Word: {
                 
             } break;
 
@@ -41,8 +79,12 @@ std::shared_ptr<AST::AST_Program> AST_Generator::Generate() {
                 // figure out what the macro does (and if it should be compiled into the program)
             } break;
 
+            case Token::Type::Operator: {
+                
+            } break;
+
             case Token::Type::Whitespace: case Token::Type::Comment: break;
-            case Token::Type::Unknown: default: break;
+            case Token::Type::Unknown: default:  { std::cout << err_b << "unknown token [type]. " << this->Get_Current_Source() << std::endl; } break;
             }
         }
     }

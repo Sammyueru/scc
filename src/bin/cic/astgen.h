@@ -19,6 +19,7 @@ public:
 
 private:
     Token Peek(int amt = 1);
+    std::string Get_Current_Source();
 
 public:
     std::shared_ptr<AST::AST_Program> Generate();
