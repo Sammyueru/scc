@@ -102,6 +102,7 @@ std::vector<Token> Parser::Parse() {
         } break;
 
         // separators
+        case ':':
         case ';': case ',':
         case '(': case ')':
         case '{': case '}':
@@ -109,8 +110,7 @@ std::vector<Token> Parser::Parse() {
             tokens.push_back(Token(Token::Type::Separator, std::string("" + current)));
         } break;
 
-        // operators
-        case ':':
+        // operators + arrow member access
         case '^':
         case '*': case '/':
         case '+': case '-':
@@ -160,6 +160,7 @@ std::vector<Token> Parser::Parse() {
 
             if (current == '-' && next == '>') {
                 tokens.push_back(Token(Token::Type::Member_access, "->"));
+                this->pos++;
                 break;
             }
 
@@ -184,7 +185,7 @@ std::vector<Token> Parser::Parse() {
             tokens.push_back(Token(Token::Type::Macro, macro));
         } break;
 
-        // number literals
+        // number literals + dot member access
         case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': case '.': {
             std::string literal = "";
             uint8_t exit = 0;
