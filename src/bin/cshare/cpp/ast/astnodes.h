@@ -2,6 +2,7 @@
 #ifndef SCC_CSHARE_CPP_AST_H
 #define SCC_CSHARE_CPP_AST_H
 #include <iostream>
+#include <vector>
 #include <memory>
 
 namespace AST {
@@ -34,7 +35,7 @@ public:
     std::shared_ptr<AST_Node> right = nullptr;
 };
 
-class AST_Asignment : AST_Node {
+class AST_Assignment : AST_Node {
 public:
     std::shared_ptr<AST_Variable> var;
     std::string modifier;
@@ -44,8 +45,8 @@ public:
 class AST_If : AST_Tree {
 public:
     AST_Operation condition;
-    std::vector<AST_If> _else_ifs;
-    std::vector<std::shared_ptr<AST_Node>> _else;
+    std::vector<std::shared_ptr<AST_If>> _else_ifs;
+    std::shared_ptr<AST_Node> _else;
 };
 }
 

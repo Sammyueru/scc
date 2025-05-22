@@ -4,14 +4,18 @@
 #include <iostream>
 #include <vector>
 #include "token.h"
+#include <cpp/ast/astnodes.h>
 
 class AST_Generator {
 private:
-    std::vector<Token> tokens;
+    std::vector<std::tuple<std::string, std::vector<Token>>> sources;
 
 public:
-    AST_Generator();
+    AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources);
     ~AST_Generator();
+
+public:
+    std::shared_ptr<AST_Program> Generate();
 };
 
 #endif
