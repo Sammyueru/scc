@@ -13,10 +13,10 @@ AST_Generator::~AST_Generator() {
 }
 
 Token AST_Generator::Peek(int amt) {
-    if (-amt > this->pos) return Token(Token::Type::Unknown, "BF"); ; // if the peek location would technically be negative (if it was signed) return default
-    size_t peek_at = this->pos + amt; // the location of the character to return
-    if (peek_at > std::get<1>(this->sources.at(current_source)).size() - 1) return Token(Token::Type::Unknown, "EOF"); // if the peek location is greater than the size of the source file return default
-    return std::get<1>(this->sources.at(current_source)).at(peek_at); // successfully returns the character
+    if (-amt > this->pos) return Token(Token::Type::Unknown, "BF"); ; // if the peek location would technically be negative (if it was signed) return before file token
+    size_t peek_at = this->pos + amt; // the location of the token to return
+    if (peek_at > std::get<1>(this->sources.at(current_source)).size() - 1) return Token(Token::Type::Unknown, "EOF"); // if the peek location is greater than the size of the token vector return end of file token
+    return std::get<1>(this->sources.at(current_source)).at(peek_at); // successfully returns the token
 }
 
 std::string AST_Generator::Get_Current_Source() {
@@ -42,7 +42,7 @@ std::shared_ptr<AST::AST_Program> AST_Generator::Generate() {
             } break;
 
             case ';': {
-                
+
             } break;
 
             case '(': {
@@ -84,7 +84,7 @@ std::shared_ptr<AST::AST_Program> AST_Generator::Generate() {
             } break;
 
             case Token::Type::Whitespace: case Token::Type::Comment: break;
-            case Token::Type::Unknown: default:  { std::cout << err_b << "unknown token [type]. " << this->Get_Current_Source() << std::endl; } break;
+            case Token::Type::Unknown: default: { std::cout << err_b << "unknown token [type]. " << this->Get_Current_Source() << std::endl; } break;
             }
         }
     }
