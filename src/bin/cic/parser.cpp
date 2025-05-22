@@ -146,11 +146,11 @@ std::vector<Token> Parser::Parse() {
                 break;
             }
 
-            if (current == '*' && next == '*') {
+            if (current == '*' || current == '&' && (current == next)) {
                 std::string op = "";
                 for (size_t i = this->pos; i < this->source.length(); i++) {
                     current = this->source.at(i);
-                    if (current != '*') break;
+                    if (current != next) break; // if current not equal to original character (which will also logically be equal to next (as next is not changed again)) then break
                     op += current;
                     this->pos++;
                 }
