@@ -7,7 +7,8 @@ TARGET    ?= desktop linux x86-32
 
 CC = gcc
 
-ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+# $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+ROOT := ./
 SRC := $(ROOT)src/bin/maker
 OBJ := $(ROOT)build/objs/bin/maker
 BIN := $(ROOT)build/scc/bin
@@ -27,14 +28,21 @@ endif
 
 OUT := $(BIN)/maker$(EXT)
 
-CSRC = $(wildcard $(SRC)/*.c $(SRC)/**/*.c)
-COBJ = $(patsubst $(SRC)/%.c,$(OBJ)/%.c.o,$(CSRC))
+CSRC = $(shell find $(SRC) -name '*.c') # $(wildcard $(SRC)/*.c $(SRC)/**/*.c)
+COBJ = $(patsubst $(SRC)/%, $(OBJ)/%.o, $(CSRC))
 
 all: $(OUT)
+
+$(ROOT)docs.pdf:
+	@mkdir -p $(ROOT)build/docs
+	doxygen $(ROOT)docs/doxyfile
+
+docs: $(ROOT)docs.pdf
+
 clean:
 	rm -rf $(ROOT)build
 
-$(COBJ): $(CSRC)
+$(OBJ)/%.c.o: $(SRC)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
