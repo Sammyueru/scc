@@ -236,14 +236,14 @@ std::vector<Token> Parser::Parse() {
                 std::string error_print = "{SCC: Classical iC} Error: ";
                 switch (exit) {
                     case 2: {
-                        error_print += "hex literal must be formatted starting with `0x` followed by a hex number.";
+                        error_print += "hex literal must be formatted starting with `0x` followed by a hex number";
                     } break;
                     
                     default: {
-                        error_print += "unknown parser error regarding a number literal.";
+                        error_print += "unknown parser error regarding a number literal";
                     } break;
                 }
-                error_print += " " + this->Get_Pos_Data();
+                error_print += ". " + this->Get_Pos_Data();
                 std::cout << error_print << std::endl;
             }
         } break;
