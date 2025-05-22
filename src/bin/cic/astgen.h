@@ -15,7 +15,7 @@ public:
     ~AST_Generator();
 
 public:
-    std::shared_ptr<AST_Program> Generate();
+    std::shared_ptr<AST::AST_Program> Generate();
 };
 
 #endif

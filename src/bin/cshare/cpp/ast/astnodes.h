@@ -46,7 +46,7 @@ class AST_If : AST_Tree {
 public:
     AST_Operation condition;
     std::vector<std::shared_ptr<AST_If>> _else_ifs;
-    std::shared_ptr<AST_Node> _else;
+    std::shared_ptr<::AST::AST_Node> _else;
 };
 }
 
