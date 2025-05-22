@@ -10,11 +10,12 @@
 class AST_Generator {
 private:
     std::vector<std::tuple<std::string, std::vector<Token>>> sources;
+    std::vector<std::string> defines;
     size_t current_source;
     size_t pos;
 
 public:
-    AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources);
+    AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources, std::vector<std::string> defines);
     ~AST_Generator();
 
 private:
