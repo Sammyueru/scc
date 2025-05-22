@@ -3,16 +3,22 @@
 #define SCC_CIC_ASTGEN_H
 #include <iostream>
 #include <vector>
+#include <tuple>
 #include "token.h"
 #include <cpp/ast/astnodes.h>
 
 class AST_Generator {
 private:
     std::vector<std::tuple<std::string, std::vector<Token>>> sources;
+    size_t current_source;
+    size_t pos;
 
 public:
     AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources);
     ~AST_Generator();
+
+private:
+    Token Peek(int amt = 1);
 
 public:
     std::shared_ptr<AST::AST_Program> Generate();

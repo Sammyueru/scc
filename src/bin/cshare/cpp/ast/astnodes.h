@@ -13,7 +13,22 @@ public:
     std::vector<std::shared_ptr<AST_Node>> contents;
 };
 
-class AST_Program : AST_Tree {};
+class AST_Program : AST_Tree {
+    std::shared_ptr<AST_Tree> entry;
+};
+
+class AST_Function : AST_Tree {
+public:
+    std::string name;
+    std::string type;
+    std::vector<std::shared_ptr<::AST::AST_Node>> args;
+};
+
+class AST_Class : AST_Tree {
+public:
+    std::string name;
+    std::vector<std::shared_ptr<AST_Class>> extends;
+};
 
 class AST_Variable : AST_Node {
 public:
