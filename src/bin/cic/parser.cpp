@@ -102,7 +102,7 @@ std::vector<Token> Parser::Parse() {
         } break;
 
         // separators
-        case ';':
+        case ';': case ',':
         case '(': case ')':
         case '{': case '}':
         case '[': case ']': {
