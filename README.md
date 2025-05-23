@@ -17,5 +17,6 @@ To build run `make` in the root project directory.
 
 ## License
 
-This project is licensed under the MIT License, please see the **"LICENSE.txt"** file.
+This project's code is licensed under the MIT License, please see the **"LICENSE.txt"** file.
 
+This project's documentation assets by Samm (files within docs/assets/samm directory) are licensed under CC-BY 4.0, please see the **"docs/assets/LICENSE.txt"** file.

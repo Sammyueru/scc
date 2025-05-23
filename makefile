@@ -36,6 +36,9 @@ all: $(OUT)
 $(ROOT)docs.pdf:
 	@mkdir -p $(ROOT)build/docs
 	doxygen $(ROOT)docs/doxyfile
+	@cd $(ROOT)build/docs/latex
+	make
+	@cd ../../../
 
 docs: $(ROOT)docs.pdf
 
