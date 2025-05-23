@@ -17,6 +17,10 @@ enum class NodeType : unsigned int {
     Op = 9,
     Assignment = 10,
     If = 11,
+    Switch = 12,
+    Shared_tree = 13,
+    Case = 14,
+    Default = 15,
 };
 }
 

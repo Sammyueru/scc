@@ -62,11 +62,15 @@ public:
 class AST_Deref : AST_Variable {
 private:
     NodeType ntype = NodeType::Deref;
+public:
+    int amount;
 };
 
 class AST_Ref : AST_Variable {
 private:
     NodeType ntype = NodeType::Ref;
+public:
+    int amount;
 };
 
 class AST_Var_Op : AST_Node {
@@ -108,6 +112,36 @@ public:
     std::vector<std::shared_ptr<AST_If>> _else_ifs;
     std::shared_ptr<::AST::AST_Node> _else;
 };
+
+class AST_Switch : AST_Tree {
+private:
+    NodeType ntype = NodeType::Switch;
+
+public:
+    std::shared_ptr<::AST::AST_Node> expression;
+};
+
+class AST_Shared_Tree : AST_Node {
+private:
+    NodeType ntype = NodeType::Shared_tree;
+
+public:
+    std::shared_ptr<AST_Tree> tree;
+};
+
+class AST_Case : AST_Shared_Tree {
+private:
+    NodeType ntype = NodeType::Case;
+
+public:
+    std::shared_ptr<AST::AST_Node> of; // "in the case of"
+};
+
+class AST_Default : AST_Shared_Tree {
+private:
+    NodeType ntype = NodeType::Default;
+};
+
 }
 
 #endif
