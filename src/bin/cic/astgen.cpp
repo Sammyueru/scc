@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 #include "astgen.h"
 
 AST_Generator::AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources, std::vector<std::string> defines) {
@@ -25,37 +26,64 @@ std::string AST_Generator::Get_Current_Source() {
 }
 
 std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
-    std::string err_b = "{SCC: Classical iC} Error: ";
-    std::vector<std::shared_ptr<AST::AST_Node>> result();
-    Token current = tokens[this->pos];
+    const std::string err_b = "{SCC: Classical iC} Error: ";
+    std::vector<std::shared_ptr<AST::AST_Node>> result;
+    Token current = this->tokens[this->pos];
     switch(current.type) {
     case Token::Type::Separator: {
         if (current.value.length() != 1) { std::cout << err_b << "separator token length not equal to 0. " << this->Get_Current_Source() << std::endl; break; }
         switch (current.value.at(0)) {
         case ':': {
-
-        } break;
-
-        case ';': {
-
-        } break;
-
-        case '(': {
-            if (open_node == nullptr) break;
-        } break;
-
-        case ')': {
-
-        } break;
-
-        case '{': {
+            if (open_node != nullptr) {
+                switch (prev_node->Get_Node_Type()) {
+                case AST::NodeType::Case: case AST::NodeType::Default: {
+                    std::shared_ptr<AST::AST_Shared_Tree> stree =  std::static_pointer_cast<AST::AST_Shared_Tree>(prev_node);
+                    tree_stack.push_back(stree->tree);
+                } break;
+                
+                default: { std::cout << err_b << "separator `:` misused. " << this->Get_Current_Source() << std::endl; } break;
+                }
+                break;
+            }
             AST::AST_Tree* node = new AST::AST_Tree();
             tree_stack.back()->contents.push_back(std::make_shared<AST::AST_Node>(node));
             tree_stack.push_back(std::make_shared<AST::AST_Tree>(node));
         } break;
 
+        case ';': {
+            open_node = nullptr;
+        } break;
+
+        case '(': {
+            if (open_node == nullptr) break;
+            // generate another segment
+        } break;
+
+        case ')': {
+            return result;
+        } break;
+
+        case '{': {
+            if (open_node != nullptr) {
+                switch (prev_node->Get_Node_Type()) {
+                case AST::NodeType::Assignment: {
+
+                } break;
+                default: {
+
+                } break;
+                }
+                break;
+            }
+            AST::AST_Tree* node = new AST::AST_Tree();
+            tree_stack.back()->contents.push_back(std::make_shared<AST::AST_Node>(node));
+            tree_stack.push_back(std::make_shared<AST::AST_Tree>(node));
+            variable_stack.push_back(std::vector<std::shared_ptr<AST::AST_Variable>>());
+        } break;
+
         case '}': {
             tree_stack.pop_back();
+            variable_stack.pop_back();
         } break;
 
         case '[': {
@@ -114,6 +142,7 @@ std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
     case Token::Type::Whitespace: case Token::Type::Comment: break;
     case Token::Type::Unknown: default: { std::cout << err_b << "unknown token [type]. " << this->Get_Current_Source() << std::endl; } break;
     }
+    return result;
 }
 
 std::shared_ptr<AST::AST_Program> AST_Generator::Generate() {

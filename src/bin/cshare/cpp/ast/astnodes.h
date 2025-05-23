@@ -113,6 +113,35 @@ public:
     std::shared_ptr<::AST::AST_Node> _else;
 };
 
+class AST_Loop : AST_Tree {
+private:
+    NodeType ntype = NodeType::Loop;
+};
+
+class AST_While : AST_Loop {
+private:
+    NodeType ntype = NodeType::While;
+
+public:
+    std::shared_ptr<AST_Operation> condition;
+};
+
+class AST_For : AST_Loop {
+private:
+    NodeType ntype = NodeType::For;
+
+public:
+    std::shared_ptr<::AST::AST_Node> expression[3];
+};
+
+class AST_Do : AST_Node {
+private:
+    NodeType ntype = NodeType::Do;
+
+public:
+    std::shared_ptr<AST_Loop> loop;
+};
+
 class AST_Switch : AST_Tree {
 private:
     NodeType ntype = NodeType::Switch;
@@ -134,12 +163,20 @@ private:
     NodeType ntype = NodeType::Case;
 
 public:
-    std::shared_ptr<AST::AST_Node> of; // "in the case of"
+    std::shared_ptr<AST::AST_Node> of; // "in the case of do tree"
 };
 
 class AST_Default : AST_Shared_Tree {
 private:
     NodeType ntype = NodeType::Default;
+};
+
+class AST_Label : AST_Node {
+private:
+    NodeType ntype = NodeType::Label;
+
+public:
+    std::string name;
 };
 
 }

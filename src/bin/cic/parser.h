@@ -10,7 +10,7 @@
 
 class Parser {
 private:
-    const std::vector<std::string> keywords = { "if", "switch", "case", "default", "while", "for", "else", "break", "continue", "typedef", "struct", "class", "enum", "return", "this", "const", "unsigned", "volatile", "signed", "unsigned", "char", "short", "int", "long", "float", "double", "public", "private", "protected", };
+    const std::vector<std::string> keywords = { "if", "switch", "case", "default", "while", "for", "else", "break", "continue", "typedef", "struct", "class", "enum", "return", "this", "const", "unsigned", "volatile", "signed", "unsigned", "char", "short", "int", "long", "float", "double", "public", "private", "protected", "namespace", "using", "template", "goto", };
 
     std::string source;
     size_t pos;

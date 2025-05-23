@@ -12,6 +12,7 @@ private:
     std::vector<std::tuple<std::string, std::vector<Token>>> sources;
     std::vector<std::string> defines;
     std::vector<Token> tokens;
+    std::vector<std::vector<std::shared_ptr<AST::AST_Variable>>> variable_stack;
     std::vector<std::shared_ptr<AST::AST_Tree>> tree_stack;
     std::shared_ptr<AST::AST_Node> prev_node;
     std::shared_ptr<AST::AST_Node>* open_node;

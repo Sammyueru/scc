@@ -21,6 +21,11 @@ enum class NodeType : unsigned int {
     Shared_tree = 13,
     Case = 14,
     Default = 15,
+    Loop = 16,
+    While = 17,
+    For = 18,
+    Do = 19,
+    Label = 20,
 };
 }
 
