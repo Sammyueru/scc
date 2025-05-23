@@ -19,7 +19,7 @@ typedef struct {
         add =  9, /* add */
         sub = 10, /* subtract */
         mul = 11, /* multiply */
-        div = 12, /* divide */
+        divide = 12, /* divide */
         exp = 13, /* exponent */
         cmp = 14, /* compare; [0] operator, [1] left, [2] right */
         sjmp = 15, /* stack jump (updates the stack pointer) */
