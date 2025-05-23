@@ -29,7 +29,7 @@ typedef struct {
         xor = 19,
     } op;
 
-    size_t inputs_counts;
+    size_t inputs_count;
 /*  input/output types
     0.  void
     1.  int

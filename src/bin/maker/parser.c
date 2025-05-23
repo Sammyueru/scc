@@ -31,7 +31,7 @@ bc_program* parser_parse_line(bc_program* program, char* line) {
 }
 
 bc_token* parser_compiler_token() {
-    bc_token result = (bc_token*)malloc(sizeof(bc_token));
+    bc_token* result = (bc_token*)malloc(sizeof(bc_token));
     result->bc = (instruction*)malloc(sizeof(instruction));
     result->count = 0;
 

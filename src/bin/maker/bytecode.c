@@ -60,14 +60,14 @@ int bc_run(bc_program* program) {
             continue;
         } break;
         case jmp: {
-            if (input_count != 1) {
+            if (program->bc[pos]->inputs_count != 1) {
                 printf("{SCC: Maker} ERROR: 'jmp' instruction must have only 1 input.\n");
                 return -1;
             }
             switch (program->bc[pos]->in_types[0]) {
             case 11: {
                 size_t jump_to = program->bc[pos]->inputs[0];
-                if (bc_count < jump_to) {
+                if (program->bc_count < jump_to) {
                     printf("{SCC: Maker} ERROR: 'jmp' instruction would go out of bounds.\n");
                     return -1;
                 }
@@ -84,7 +84,7 @@ int bc_run(bc_program* program) {
 
         } break;
         case wait: {
-            if (input_count != 1) {
+            if (program->bc[pos]->inputs_count != 1) {
                 printf("{SCC: Maker} ERROR: 'wait' instruction must have only 1 input.\n");
                 return -1;
             }
