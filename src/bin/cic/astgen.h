@@ -11,6 +11,10 @@ class AST_Generator {
 private:
     std::vector<std::tuple<std::string, std::vector<Token>>> sources;
     std::vector<std::string> defines;
+    std::vector<Token> tokens;
+    std::vector<std::shared_ptr<AST::AST_Tree>> tree_stack;
+    std::shared_ptr<AST::AST_Node> prev_node;
+    std::shared_ptr<AST::AST_Node>* open_node;
     size_t current_source;
     size_t pos;
 
@@ -21,6 +25,7 @@ public:
 private:
     Token Peek(int amt = 1);
     std::string Get_Current_Source();
+    std::vector<std::shared_ptr<AST::AST_Node>> Generate_Segment();
 
 public:
     std::shared_ptr<AST::AST_Program> Generate();
