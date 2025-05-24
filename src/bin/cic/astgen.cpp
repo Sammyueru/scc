@@ -119,6 +119,11 @@ std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
             }}, { "typedef", []{
             }}, { "struct", []{
             }}, { "class", []{
+                this->pos++;
+                std::vector<std::shared_ptr<AST::AST_Node>> word_segment = this->Generate_Segment();
+                if (word_segment.length() != 1) {
+                    return;
+                }
             }}, { "enum", []{
             }}, { "return", []{
             }}, { "this", []{
@@ -147,6 +152,7 @@ std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
                 std::cout << err_b << "could not find keyword `" << current.value << "`. " << this->Get_Current_Source() << std::endl;
                 break;
             }
+            found->second();
         };
     } break;
 
