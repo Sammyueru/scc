@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <unordered_map>
 #include "astgen.h"
 
 AST_Generator::AST_Generator(std::vector<std::tuple<std::string, std::vector<Token>>> sources, std::vector<std::string> defines) {
@@ -103,7 +104,50 @@ std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
     } break;
 
     case Token::Type::Keyword: {
-        
+        const std::unordered_map<std::string, void(*)(void)> keywords = {
+            { "if", []{
+                
+            }}, { "switch", []{
+                
+            }}, { "case", []{
+            }}, { "default", []{
+            }}, { "while", []{
+            }}, { "for", []{
+            }}, { "else", []{
+            }}, { "break", []{
+            }}, { "continue", []{
+            }}, { "typedef", []{
+            }}, { "struct", []{
+            }}, { "class", []{
+            }}, { "enum", []{
+            }}, { "return", []{
+            }}, { "this", []{
+            }}, { "const", []{
+            }}, { "unsigned", []{
+            }}, { "volatile", []{
+            }}, { "signed", []{
+            }}, { "unsigned", []{
+            }}, { "char", []{
+            }}, { "short", []{
+            }}, { "int", []{
+            }}, { "long", []{
+            }}, { "float", []{
+            }}, { "double", []{
+            }}, { "public", []{
+            }}, { "private", []{
+            }}, { "protected", []{
+            }}, { "namespace", []{
+            }}, { "using", []{
+            }}, { "template", []{
+            }}, { "goto", []{
+            }},
+
+            auto found = keywords.find(current.value);
+            if (found == keywords.end()) {
+                std::cout << err_b << "could not find keyword `" << current.value << "`. " << this->Get_Current_Source() << std::endl;
+                break;
+            }
+        };
     } break;
 
     case Token::Type::Macro: {
