@@ -25,6 +25,7 @@ public:
 
 private:
     Token Peek(int amt = 1);
+    Token PeekNW(int amt = 1); // peek no whitespace or comments
     std::string Get_Current_Source();
     std::vector<std::shared_ptr<AST::AST_Node>> Generate_Segment();
 

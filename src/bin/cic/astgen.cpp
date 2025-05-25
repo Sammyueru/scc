@@ -19,7 +19,27 @@ Token AST_Generator::Peek(int amt) {
     if (-amt > this->pos) return Token(Token::Type::Unknown, "BF"); // if the peek location would technically be negative (if it was signed) return before file token
     size_t peek_at = this->pos + amt; // the location of the token to return
     if (peek_at > std::get<1>(this->sources.at(current_source)).size() - 1) return Token(Token::Type::Unknown, "EOF"); // if the peek location is greater than the size of the token vector return end of file token
-    return std::get<1>(this->sources.at(current_source)).at(peek_at); // successfully returns the token
+    return std::get<1>(std::get<1>(this->sources).at(current_source)).at(peek_at); // successfully returns the token
+}
+
+Token AST_Generator::PeekNW(int amt) {
+    Token current = Token(Token::Type::Unknown, "NONE");
+    size_t i = this->pos;
+    std::vector<Token> source = get<1>(this->sources.at(current_source));
+    int sub = amt > 0 ? 1 : -1;
+    while (i > 0 && i < source.size() - 1) {
+        if (amt == 0) break;
+        amt -= sub;
+        i += sub;
+        current = source.at(i);
+        while (current.value == Token::Type::Whitespace || current.value == Token::Type::Comment) {
+            i += sub;
+            if (i < 0 || i > sources.size() - 1) break;
+            current = sources.at(i);
+        }
+    }
+
+    return current;
 }
 
 std::string AST_Generator::Get_Current_Source() {
@@ -169,24 +189,33 @@ std::vector<std::shared_ptr<AST::AST_Node>> AST_Generator::Generate_Segment() {
         if (value_len < 1) { std::cout << err_b << "operator token [value] length less than 1. " << this->Get_Current_Source() << std::endl; break; }
 
         char fchr = current.value.at(0);
-        if (fchr == '*' || fchr == '&') {
+
+        switch (fchr) {
+        case '+': {
+
+        } break;
+        
+        case '*': case '&':
             uint8_t is_pointer_chr = 0;
-            if (value_len == 1) is_pointer_chr = 1;
-            else if (fchr == current.value.at(1)) is_pointer_chr = 1;
-            if (is_pointer_chr == 0) { std::cout << err_b << "misused operator combination `" << current.value << "`. " << this->Get_Current_Source() << std::endl; break; }
+            if (value_len == 1) {
+                if (this->PeekNW(-1).type == Token::Type::Operator) is_pointer_chr = 1;
+            }
+            else if (fchr == current.value.at(1) && fchr == '*') is_pointer_chr = 1;
 
-            std::shared_ptr<AST::AST_Node> node = nullptr;
-            if (fchr == '*') {
-                node = std::make_shared<AST::AST_Node>(new AST::AST_Deref());
-            }
-            else {
-                node = std::make_shared<AST::AST_Node>(new AST::AST_Ref());
-            }
+            if (is_pointer_chr != 0) {
+                std::shared_ptr<AST::AST_Node> node = nullptr;
+                if (fchr == '*') {
+                    node = std::make_shared<AST::AST_Node>(new AST::AST_Deref());
+                }
+                else {
+                    node = std::make_shared<AST::AST_Node>(new AST::AST_Ref());
+                }
 
-            for (size_t i = 0; i < value_len; i++) {
-                
+                for (size_t i = 0; i < value_len; i++) {
+                    
+                }
             }
-        }
+        } break;
     } break;
 
     case Token::Type::Whitespace: case Token::Type::Comment: break;
