@@ -1,6 +1,6 @@
 /* SCC: Classical toki ilo - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
-#ifndef SCC_CTOKI_IJO_ASTGEN_H
-#define SCC_CTOKI_IJO_ASTGEN_H
+#ifndef SCC_CTOKI_ILO_ASTGEN_H
+#define SCC_CTOKI_ILO_ASTGEN_H
 #include <iostream>
 #include <cstdint>
 #include <memory>

@@ -1,6 +1,6 @@
 /* SCC: Classical toki ilo - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
-#ifndef SCC_CTOKI_IJO_COMPILER_H
-#define SCC_CTOKI_IJO_COMPILER_H
+#ifndef SCC_CTOKI_ILO_COMPILER_H
+#define SCC_CTOKI_ILO_COMPILER_H
 #include <iostream>
 #include <cstdint>
 #include <vector>
