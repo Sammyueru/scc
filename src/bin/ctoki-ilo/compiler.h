@@ -8,10 +8,11 @@
 
 typedef struct compiler_settings_ts {
     unsigned int version; /* number of words */
-/*  0. Hindu-Arabic base-10
-    1. official toki pona numeral system
+/*  0. Hindu-Arabic base-10 (enabled by default)
+    1. official toki pona numeral system (enabled by default)
     2. roman toki pona numberal system
-    3. modified roman toki pona numeral system */
+    3. modified roman toki pona numeral system
+    4. nasin nanpa pona numeral system (enabled by default) */
     std::vector<uint16_t> number_systems;
 
     uint8_t link; // should link?

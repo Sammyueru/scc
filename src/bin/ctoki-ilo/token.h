@@ -33,7 +33,7 @@ public:
         ijo = 27, /* objects and dynamic/changing type */
         kute = 28,
         lape = 29,
-        ma = 30, /* location labels and namespaces with "ma tomo <name>" */
+        ma = 30, /* location labels, namespaces with "ma tomo <name>", and global variables */
         pini = 31, /* task completed/end block */
         pana = 32, /* return */
         pi = 33, /* access object or array elements */
