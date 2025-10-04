@@ -1,4 +1,5 @@
 /* SCC: Sam's Pre-C (SPC) - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
+#include <stdio.h>
 #include <string.h>
 #include "defines.h"
 
@@ -55,4 +56,8 @@ char* convert_var_name(char* og_name) {
 
     new_name[new_len + 1] = '\0';
     return new_name;
+}
+
+uint16_t transpile(transpiler_settings* settings) {
+    return 0; /* success */
 }
