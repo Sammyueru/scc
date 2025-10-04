@@ -1,7 +1,8 @@
 /* SCC: Sam's Pre-C (SPC) - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
 
-/* modules are defined in the following manner:
- * 'module my_module { .. }'
+/* modules are defined in the following manners:
+ * 'module my_module { ... }'
+ * 'module my_module ..;'
 **/
 
 /* modules are used (globally across a file) in the following manners:
