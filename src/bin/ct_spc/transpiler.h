@@ -8,6 +8,14 @@
 #include "header_gen.h"
 
 typedef struct {
+    /* Samm's Standard Version */
+    uint32_t ssv_major; /* major */
+    uint16_t ssv_minor; /* minor */
+
+    /* C ISO */
+    uint32_t c_iso;
+
+    /* directories */
     char** src_dirs;
     size_t src_dirs_count;
 
