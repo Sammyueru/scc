@@ -36,6 +36,10 @@ int main(int argc, char* argv[]) {
 
     settings->output_dir = NULL;
 
+    settings->ssv_major = 2026;
+    settings->ssv_minor = 0;
+    settings->c_iso = 99;
+
     /* parse arguments */
     for (int i = 0; i < argc; i++) {
         char arg = argv[i];
