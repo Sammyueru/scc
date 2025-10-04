@@ -10,6 +10,7 @@ This directory contains the source code for the different binary programs.
 | `./c_*/`           | Classical compiler                 |
 | `./ch_*/`          | Classical hardware compiler        |
 | `./ct_*/`          | Classical transpiler               |
+| `./ci_*/`          | Classical interpreted system       |
 | `./b_*/`           | Biological [hardware] compiler     |
 | `./q_*/`           | Quantum compiler                   |
 | `./qh_*/`          | Quantum hardware compiler          |
