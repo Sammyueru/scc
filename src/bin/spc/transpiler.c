@@ -3,6 +3,8 @@
 #include "defines.h"
 
 char* convert_var_name(char* og_name) {
+    if (!og_name) return NULL;
+
     uint16_t og_len = strnlen(og_name, BOUND_16ui);
     size_t new_len = og_len;
     for (uint16_t i = 0; i < og_len; i++) {
@@ -21,7 +23,8 @@ char* convert_var_name(char* og_name) {
         }
     }
 
-    char* new_name = (char*)malloc(new_len);
+    char* new_name = (char*)malloc(new_len + 1);
+    if (new_name == NULL) return new_name;
     
     {
         size_t new_current = 0;
@@ -50,5 +53,6 @@ char* convert_var_name(char* og_name) {
         }
     }
 
+    new_name[new_len + 1] = '\0';
     return new_name;
 }
