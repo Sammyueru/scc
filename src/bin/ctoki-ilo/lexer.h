@@ -1,21 +1,23 @@
 /* SCC: Classical toki ilo - Copyright (c) 2025 Samm, See LICENSE.txt for license details */
-#ifndef SCC_CTOKI_ILO_PARSER_H
-#define SCC_CTOKI_ILO_PARSER_H
+#ifndef SCC_CTOKI_ILO_LEXER_H
+#define SCC_CTOKI_ILO_LEXER_H
 #include <iostream>
 #include <cstdint>
 #include <vector>
-#include <token.h>
 
-class Parser {
-private:
+class Lexer {
+public:
     std::string source;
 
-public:
-    Parser(std::string source);
-    ~Parser();
+    size_t pos;
+    size_t pos_word;
 
 public:
-    std::vector<Token> Parse();
+    Lexer(std::string source);
+    ~Lexer();
+
+public:
+    std::string Lex();
 };
 
 #endif

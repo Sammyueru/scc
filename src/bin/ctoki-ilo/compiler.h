@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
+#include <lexer.h>
 #include <parser.h>
 
 typedef struct compiler_settings_ts {
@@ -27,10 +28,11 @@ typedef struct compiler_settings_ts {
 
 class Compiler() {
 private:
+    std::vector<Lexer> lexers;
     std::vector<Parser> parsers;
     Compiler_Settings settings;
 public:
-    Compiler(std::vector<std::string> source_file, Compiler_Settings settings);
+    Compiler(std::vector<std::string> source_files, Compiler_Settings settings);
     ~Compiler();
     
 public:
